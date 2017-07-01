@@ -1,6 +1,10 @@
 /*global $, document, clearInterval, setInterval, window*/
 var _cb_findItemsByKeywords;
 $(function () {
+    if (!Ebay) {
+        throw new Error("No Ebay object");
+    }
+    var ebayAPI = new Ebay("_cb_findItemsByKeywords");
     var rootName = "findItemsAdvancedResponse";
     var now = new Date();
     var oneDay = 24 * 60 * 60 * 1000;
@@ -24,7 +28,6 @@ $(function () {
         $('.sidebar').height(ht);
     }
 
-    var ebayURL;
 
     function resetEbayURL() {
         if (unholy) {
@@ -40,30 +43,10 @@ $(function () {
             var day = dt.getDate();
             var amStart = new Date(yr, mon, day, 0);
             var amEnd = new Date(yr, mon, day, 6);
+            ebayAPI.setEndTimeWindow(amStart, amEnd);
+        } else {
+            ebayAPI.removeTimeWindow();
         }
-        ebayURL = "https://svcs.ebay.com/services/search/FindingService/v1?" +
-            "SECURITY-APPNAME=SteveMcA-9f89-4f43-8387-76544c4cb335" +
-            //"&OPERATION-NAME=findItemsByKeywords" +
-            "&OPERATION-NAME=findItemsAdvanced" +
-            "&SERVICE-VERSION=1.0.0&RESPONSE-DATA-FORMAT=JSON" +
-            "&callback=_cb_findItemsByKeywords" +
-            "&REST-PAYLOAD" +
-            "&keywords=iPhone 6" +
-            "&categoryId=9355" +
-            "&sortOrder=EndTimeSoonest" +
-            "&itemFilter(0).name=LocatedIn" +
-            "&itemFilter(0).value=GB" +
-            "&itemFilter(1).name=MaxPrice" +
-            "&itemFilter(1).value=200";
-        if (unholy) {
-            ebayURL += "&itemFilter(2).name=EndTimeFrom" +
-                "&itemFilter(2).value=" + amStart.toISOString() +
-                "&itemFilter(3).name=EndTimeTo" +
-                "&itemFilter(3).value=" + amEnd.toISOString();
-        }
-        ebayURL += "&paginationInput.entriesPerPage=40" +
-            "&GLOBAL-ID=EBAY-GB&siteid=3";
-
 
     }
 
@@ -144,7 +127,7 @@ $(function () {
         var currencySymbol = currentPrice['@currencyId'];
         currencySymbol = currency[currencySymbol] || currencySymbol;
         var shippingCosts = getValue(shippingInfo, 'shippingServiceCost');
-        shippingCosts = normalizeTrailingZeros(shippingCosts['__value__']);
+        shippingCosts = (shippingCosts && shippingCosts['__value__']) ? normalizeTrailingZeros(shippingCosts['__value__']) : null;
         var timeObj = getTimeLeft(listingInfo, sellingStatus);
         var title = getValue(item, 'title');
         var size = "";
@@ -333,29 +316,13 @@ $(function () {
 
     }
 
-
-    /**
-    $.ajax({
-        type: 'GET',
-        url: url,
-        dataType: 'json',
-        success: function () {
-            console.log("SUCCESS");
-        },
-        crossDomain: true,
-        beforeSend: function (request) {
-            request.setRequestHeader('Access-Control-Allow-Origin', '*');
-        }
-    });
-    **/
     _cb_findItemsByKeywords = findItemsByKeywords;
 
     function refreshData() {
         $('#fetch-btn').attr('disabled', true);
-        $('#ebay-url').remove();
         $('.loader').removeClass('hidden');
         resetEbayURL();
-        $('body').append('<script id="ebay-url" src="' + ebayURL + '"></script>');
+        ebayAPI.findItemsAdvanced("iPhone 6", 9355);
     }
     $('#fetch-btn').click(refreshData);
     var refreshInt;
