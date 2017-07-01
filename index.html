@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Ebay Search</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" />
+    <link href="/css/style.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Ebay Search</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <button id="fetch-btn" type="button" class="btn btn-primary">Fetch Data</button>
+                    </li>
+                    <li>
+                        <button id="refresh-btn" type="button" class="btn btn-primary">Refresh Every 60 seconds</button>
+                    </li>
+                    <li>
+                        <button id="unholy-btn" type="button" class="btn btn-primary">Show Unholy Hours</button>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    <!-- Page Content -->
+    <div class="container">
+        <div id="btn-tabs" class="row tab-header">
+            <button type="button" class="btn btn-secondary active" data-id="tab1">Standard View</button>
+            <button type="button" class="btn btn-secondary" data-id="tab2">Tree View</button>
+        </div>
+        <div id="tab1" class="row tab">
+            <div class="col-xs-3 sidebar">
+                <h3>Summary</h3>
+                <ul>
+
+                </ul>
+            </div>
+            <div class="col-xs-9 main">
+
+
+                <div id="results">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="3">
+                        <tbody>
+                            <tr class="hidden">
+                                <td class="image-container">
+                                    <div class="lvpic">
+                                        <img src="" border="0">
+                                    </div>
+                                </td>
+                                <td class="data-container">
+                                    <a class="item-link" href="" target="_blank">
+                                        <h3 class="title"></h3>
+                                        <div class="subtitle"></div>
+                                        <div class="condition">Condition: <span></span></div>
+                                        <ul class="lvprices left">
+                                            <li class="price"></li>
+                                            <li class="bidcount hidden"></li>
+                                            <li class="listType hidden"></li>
+                                            <li class="bin hidden"><img src="https://ir.ebaystatic.com/pictures/aw/pics/bin_15x54.gif" border="0"></li>
+                                            <li class="bestOffer hidden">Buy it now<br/>or Best Offer</li>
+                                            <li class="bids hidden"></li>
+                                            <li class="postage hidden"></li>
+                                            <li class="fs hidden">Free Postage</li>
+                                            <li class="watching hidden"></li>
+                                        </ul>
+                                        <ul class="lvdetails left">
+                                            <li class="timeleft"></li>
+                                            <li class="location"></li>
+                                        </ul>
+
+
+                                    </a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <div id="tab2" class="row hidden tab">
+            <div class="col-xs-6">
+                <h4>Used</h4>
+                <ul id="tree1" class="tree">
+
+                </ul>
+            </div>
+            <div class="col-xs-6">
+                <h4>For parts or not working</h4>
+                <ul id="tree2" class="tree">
+
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class="loader hidden"></div>
+    <!-- /.container -->
+    <script src="/js/jquery.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+
+</html>
